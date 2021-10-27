@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+  <meta name="description" content="记录技术点滴">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    离线数仓建设2 |
+    
+    个人博客</title>
+  
+  <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <main class="content">
+    <section class="outer">
+  <article id="post-离线数仓建设2" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+
+<h1 class="article-title" itemprop="name">
+  离线数仓建设2
+</h1>
+
+
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2018/05/12/%E7%A6%BB%E7%BA%BF%E6%95%B0%E4%BB%93%E5%BB%BA%E8%AE%BE2/" class="article-date">
+  <time datetime="2018-05-12T06:45:00.000Z" itemprop="datePublished">2018-05-12</time>
+</a>
+      
+    </div>
+    
+
+    
+    
+<div class="tocbot"></div>
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+      <h2 id="1-增量数据同步"><a href="#1-增量数据同步" class="headerlink" title="1.增量数据同步"></a>1.增量数据同步</h2><h3 id="1-1-增量抽取-merge到全量的过程"><a href="#1-1-增量抽取-merge到全量的过程" class="headerlink" title="1.1.增量抽取+merge到全量的过程"></a>1.1.增量抽取+merge到全量的过程</h3><p>ods:增量（每个时间分区）</p>
+<p>dwd:全量（每个时间分区）</p>
+<p>增量数据抽取条件：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">where</span> (create_time <span class="operator">&gt;=</span> <span class="number">2017</span><span class="number">-06</span><span class="number">-01</span> <span class="keyword">or</span> update_time <span class="operator">&gt;=</span> <span class="number">2017</span><span class="number">-06</span><span class="number">-01</span>)</span><br></pre></td></tr></table></figure>
+<p>ods层增量数据合并到dwd层全量数据</p>
+<p>1.确定关联键唯一（一般用id）</p>
+<p>2.</p>
+<p>全量表</p>
+<p>left join</p>
+<p>增量表 on 全量表.id = 增量表.id</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span></span><br><span class="line"><span class="comment">--全量表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> dwd_order_d(</span><br><span class="line">pay_day string,</span><br><span class="line">trade_no string,</span><br><span class="line">phone string,</span><br><span class="line">pay_amount <span class="type">decimal</span>(<span class="number">18</span>,<span class="number">2</span>),</span><br><span class="line">pay_status <span class="type">int</span>,</span><br><span class="line">update_time string</span><br><span class="line">)</span><br><span class="line"><span class="type">row</span> format delimited fields terminated <span class="keyword">by</span> <span class="string">&#x27;,&#x27;</span></span><br><span class="line">stored <span class="keyword">as</span> textfile;</span><br><span class="line"></span><br><span class="line"><span class="comment">--增量表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> ods_order_di(</span><br><span class="line">pay_day string,</span><br><span class="line">trade_no string,</span><br><span class="line">phone string,</span><br><span class="line">pay_amount <span class="type">decimal</span>(<span class="number">18</span>,<span class="number">2</span>),</span><br><span class="line">pay_status <span class="type">int</span>,</span><br><span class="line">update_time string</span><br><span class="line">)</span><br><span class="line"><span class="type">row</span> format delimited fields terminated <span class="keyword">by</span> <span class="string">&#x27;,&#x27;</span></span><br><span class="line">stored <span class="keyword">as</span> textfile;</span><br><span class="line"><span class="number">2.</span>数据导入</span><br><span class="line">order_his.txt</span><br><span class="line"><span class="number">2017</span><span class="number">-06</span><span class="number">-01</span>,<span class="number">001</span>,<span class="number">111111</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">2017</span><span class="number">-06</span><span class="number">-01</span></span><br><span class="line"><span class="number">2017</span><span class="number">-06</span><span class="number">-01</span>,<span class="number">002</span>,<span class="number">222222</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">2017</span><span class="number">-06</span><span class="number">-01</span></span><br><span class="line"><span class="number">2017</span><span class="number">-06</span><span class="number">-01</span>,<span class="number">003</span>,<span class="number">333333</span>,<span class="number">3</span>,<span class="number">0</span>,<span class="number">2017</span><span class="number">-06</span><span class="number">-01</span></span><br><span class="line"><span class="number">2017</span><span class="number">-06</span><span class="number">-01</span>,<span class="number">004</span>,<span class="number">444444</span>,<span class="number">4</span>,<span class="number">0</span>,<span class="number">2017</span><span class="number">-06</span><span class="number">-01</span></span><br><span class="line"></span><br><span class="line">order_increment.txt</span><br><span class="line"><span class="number">2017</span><span class="number">-06</span><span class="number">-01</span>,<span class="number">002</span>,<span class="number">222222</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">2017</span><span class="number">-06</span><span class="number">-02</span></span><br><span class="line"><span class="number">2017</span><span class="number">-06</span><span class="number">-01</span>,<span class="number">004</span>,<span class="number">444444</span>,<span class="number">4</span>,<span class="number">1</span>,<span class="number">2017</span><span class="number">-06</span><span class="number">-02</span></span><br><span class="line"><span class="number">2017</span><span class="number">-06</span><span class="number">-02</span>,<span class="number">005</span>,<span class="number">444444</span>,<span class="number">4</span>,<span class="number">0</span>,<span class="number">2017</span><span class="number">-06</span><span class="number">-02</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">load data <span class="keyword">local</span> inpath <span class="string">&#x27;/opt/data/order_his.txt&#x27;</span> overwrite <span class="keyword">into</span> <span class="keyword">table</span> dwd_order_d</span><br><span class="line">load data <span class="keyword">local</span> inpath <span class="string">&#x27;/opt/data/order_increment.txt&#x27;</span> <span class="keyword">into</span> <span class="keyword">table</span> ods_order_di</span><br><span class="line"></span><br><span class="line">写<span class="keyword">sql</span>合并：</span><br><span class="line"><span class="keyword">insert</span> overwrite <span class="keyword">table</span> dwd_order_d</span><br><span class="line"><span class="keyword">select</span></span><br><span class="line">  a.pay_day,</span><br><span class="line">  a.trade_no,</span><br><span class="line">  a.phone,</span><br><span class="line">  a.pay_amount,</span><br><span class="line">  a.pay_status,</span><br><span class="line">  a.update_time</span><br><span class="line"><span class="keyword">from</span></span><br><span class="line">(</span><br><span class="line">   <span class="keyword">select</span></span><br><span class="line">     pay_day,</span><br><span class="line">     trade_no,</span><br><span class="line">     phone,</span><br><span class="line">     pay_amount,</span><br><span class="line">     pay_status,</span><br><span class="line">     update_time</span><br><span class="line">   <span class="keyword">from</span> dwd_order_d</span><br><span class="line">) <span class="keyword">as</span> a</span><br><span class="line"><span class="keyword">left</span> <span class="keyword">join</span></span><br><span class="line">(</span><br><span class="line">   <span class="keyword">select</span></span><br><span class="line">     pay_day,</span><br><span class="line">     trade_no,</span><br><span class="line">     phone,</span><br><span class="line">     pay_amount,</span><br><span class="line">     pay_status,</span><br><span class="line">     update_time</span><br><span class="line">   <span class="keyword">from</span> ods_order_di</span><br><span class="line">) <span class="keyword">as</span> b</span><br><span class="line"><span class="keyword">on</span> a.trade_no <span class="operator">=</span> b.trade_no</span><br><span class="line"><span class="keyword">where</span> b.trade_no <span class="keyword">is</span> <span class="keyword">null</span></span><br><span class="line"><span class="keyword">union</span> <span class="keyword">all</span></span><br><span class="line"><span class="keyword">select</span></span><br><span class="line">  pay_day,</span><br><span class="line"> trade_no,</span><br><span class="line"> phone,</span><br><span class="line"> pay_amount,</span><br><span class="line"> pay_status,</span><br><span class="line"> update_time</span><br><span class="line"><span class="keyword">from</span> ods_order_di</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>增量抽取+merge到全量的过程</p>
+<p>1.抽取性能提升  业务库的压力减少了</p>
+<p>2.数仓中的数据变化</p>
+<p>dwd层 一直都是全量，是没减少的<br>ods层 是减少了  原先天天全量抽取  现在天天增量抽取  但是不明显<br>   因为ods层只保留3天的数据</p>
+<h3 id="1-2-拉链表"><a href="#1-2-拉链表" class="headerlink" title="1.2.拉链表"></a>1.2.拉链表</h3><h4 id="1-2-1-拉链表介绍"><a href="#1-2-1-拉链表介绍" class="headerlink" title="1.2.1.拉链表介绍"></a>1.2.1.拉链表介绍</h4><p>1.多了start_date和end_date这2个字段  标识了所在记录的生命周期</p>
+<p>拉链表的意义是什么</p>
+<p>方式一：全量抽取   ods+dwd 按天分区 天天全量</p>
+<p>dwd数据量(一年数据为例):    <strong>365*每天全量数据</strong></p>
+<p>方式二：增量抽取 + merge到全量表    dwd层时 按天分区 天天全量</p>
+<p>dwd数据量(一年数据为例):<strong>1<em>全量数据 + 364</em>每天全量的数据</strong></p>
+<p>方式三：拉链表  最大的作用就是 降低了非常多的存储<br>dwd数据量(一年数据为例):<strong>初始化拉链表时的全量数据 + 天<em>更新的数据（1</em>全量数据 + 364*每天更新的数据）</strong></p>
+<p>拉链表 能够兼顾一种场景 业务上要看历史上某个时刻的数据</p>
+<h4 id="1-2-2-拉链表实现"><a href="#1-2-2-拉链表实现" class="headerlink" title="1.2.2.拉链表实现"></a>1.2.2.拉链表实现</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--ods层的初始化全量表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> ods_order_d(</span><br><span class="line">pay_day string,</span><br><span class="line">trade_no string,</span><br><span class="line">phone string,</span><br><span class="line">pay_amount <span class="type">decimal</span>(<span class="number">18</span>,<span class="number">2</span>),</span><br><span class="line">pay_status <span class="type">int</span>,</span><br><span class="line">update_time string</span><br><span class="line">)</span><br><span class="line"><span class="type">row</span> format delimited fields terminated <span class="keyword">by</span> <span class="string">&#x27;,&#x27;</span></span><br><span class="line">stored <span class="keyword">as</span> textfile;</span><br><span class="line">数据导入：</span><br><span class="line">load data <span class="keyword">local</span> inpath <span class="string">&#x27;/opt/data/order_his.txt&#x27;</span> overwrite <span class="keyword">into</span> <span class="keyword">table</span> ods_order_d</span><br><span class="line"></span><br><span class="line"><span class="comment">--ods层的订单更新表</span></span><br><span class="line">ods_order_di</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 拉链表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> dwd_order_ds(</span><br><span class="line">pay_day string,</span><br><span class="line">trade_no string,</span><br><span class="line">phone string,</span><br><span class="line">pay_amount <span class="type">decimal</span>(<span class="number">18</span>,<span class="number">2</span>),</span><br><span class="line">pay_status <span class="type">int</span>,</span><br><span class="line">start_date string,</span><br><span class="line">end_date string</span><br><span class="line">)</span><br><span class="line"><span class="type">row</span> format delimited fields terminated <span class="keyword">by</span> <span class="string">&#x27;,&#x27;</span></span><br><span class="line">stored <span class="keyword">as</span> textfile;</span><br><span class="line"></span><br><span class="line">第一步：初始化拉链表</span><br><span class="line"><span class="keyword">insert</span> overwrite <span class="keyword">table</span> dwd_order_ds</span><br><span class="line">selectpay_day,trade_no,phone,pay_amount,pay_status,<span class="string">&#x27;2018-06-01&#x27;</span> <span class="keyword">as</span> start_date,<span class="string">&#x27;9999-12-31&#x27;</span> <span class="keyword">as</span> end_date <span class="keyword">from</span> ods_order_d;</span><br><span class="line"></span><br><span class="line">第二步：</span><br><span class="line">	<span class="number">1.</span>对于历史上已经被更新掉的数据  end_date 要从<span class="number">9999</span><span class="number">-12</span><span class="number">-31</span>改为失效的那一天日期</span><br><span class="line">	<span class="number">2.</span>要将新增的记录 <span class="keyword">or</span> 被更新的记录 给<span class="keyword">insert</span>进去  同时将对应的<span class="keyword">start</span> <span class="keyword">end</span>给赋值</span><br><span class="line"><span class="keyword">insert</span> overwrite <span class="keyword">table</span> dwd_order_ds</span><br><span class="line"><span class="keyword">select</span> t.<span class="operator">*</span> <span class="keyword">from</span></span><br><span class="line">(<span class="keyword">select</span> a.pay_day,a.trade_no,a.phone,a.pay_amount,a.pay_status,a.start_date,<span class="keyword">case</span> <span class="keyword">when</span> a.end_date<span class="operator">=</span><span class="string">&#x27;9999-12-31&#x27;</span> <span class="keyword">and</span> b.trade_no <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">null</span> <span class="keyword">then</span> <span class="string">&#x27;2018-06-01&#x27;</span> <span class="keyword">else</span> a.end_date <span class="keyword">end</span> <span class="keyword">as</span> end_date <span class="keyword">from</span> dwd_order_ds <span class="keyword">as</span> a <span class="keyword">left</span> <span class="keyword">join</span> ods_order_di <span class="keyword">as</span> b <span class="keyword">on</span> a.trade_no <span class="operator">=</span> b.trade_no</span><br><span class="line"><span class="keyword">union</span> <span class="keyword">all</span></span><br><span class="line"><span class="keyword">select</span> c.pay_day,c.trade_no,c.phone,c.pay_amount,c.pay_status,</span><br><span class="line"><span class="string">&#x27;2018-06-02&#x27;</span> <span class="keyword">as</span> start_date,<span class="string">&#x27;9999-12-31&#x27;</span> <span class="keyword">as</span> end_date <span class="keyword">from</span> ods_order_di <span class="keyword">as</span> c) <span class="keyword">as</span> t</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-3-拉链表缺点"><a href="#1-2-3-拉链表缺点" class="headerlink" title="1.2.3.拉链表缺点"></a>1.2.3.拉链表缺点</h4><h5 id="1-上游数据加字段问题"><a href="#1-上游数据加字段问题" class="headerlink" title="1.上游数据加字段问题"></a>1.上游数据加字段问题</h5><p>mysql端:a字段在2018-06-01加上了 而且a字段很重要 业务统计要用的</p>
+<p>hive端  a字段  2020-06-07才知道 </p>
+<p>1-7号  关于a字段的状态 丢了？1个月后 业务统计又恰好需要历史状态</p>
+<p>mysql业务库上,要加的这个字段a,对于历史数据来说他是有默认值的</p>
+<p>hive端 对于拉链表来说  历史的数据也需要有默认值</p>
+<p><strong>解决方式</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> overwrite xxx</span><br><span class="line"><span class="keyword">select</span> a,b,</span><br><span class="line">...</span><br><span class="line"><span class="number">0</span> <span class="keyword">as</span> new_column</span><br><span class="line"><span class="keyword">from</span> dwd_order_ds</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-上游数据出现脏数据"><a href="#2-上游数据出现脏数据" class="headerlink" title="2.上游数据出现脏数据"></a>2.上游数据出现脏数据</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">以订单数据为例  变化周期是固定   确定业务周期 这些数据过了这个周期是不会再变了</span><br><span class="line">  数据结转  dt(分区字段)  过期  历史  活跃</span><br><span class="line">  	过期   所有生命周期已经无效了的数据</span><br><span class="line">  	历史   不会再做任何变更的数据</span><br><span class="line">  	活跃   在固定业务周期内 还会做变化的数据</span><br></pre></td></tr></table></figure>
+<h5 id="3-注意点"><a href="#3-注意点" class="headerlink" title="3.注意点"></a>3.注意点</h5><p>关联键 一定要和业务开发 确认好 是否能够确保关联的时候不会出问题  </p>
+<h5 id="4-拉链表优化"><a href="#4-拉链表优化" class="headerlink" title="4.拉链表优化"></a>4.拉链表优化</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>存储格式  列式存储 orc</span><br><span class="line"><span class="number">2.</span>指定分区字段  查询能做分区裁剪</span><br><span class="line">		dt</span><br><span class="line">业务上的时间  pay_day,update_time</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2018/05/12/%E7%A6%BB%E7%BA%BF%E6%95%B0%E4%BB%93%E5%BB%BA%E8%AE%BE2/" data-id="ckv9mtu6z000fpdgh33gsasnj" class="article-share-link">
+        分享
+      </a>
+      
+    </footer>
+
+  </div>
+
+  
+  
+<nav class="article-nav">
+  
+  <a href="/2018/05/12/%E7%A6%BB%E7%BA%BF%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E5%BB%BA%E8%AE%BE/" class="article-nav-link">
+    <strong class="article-nav-caption">前一篇</strong>
+    <div class="article-nav-title">
+      
+      离线数据仓库建设
+      
+    </div>
+  </a>
+  
+  
+</nav>
+
+  
+
+  
+  
+  
+  
+
+</article>
+</section>
+    <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+  <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+  <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>个人博客 &copy; 2021</li>
+      
+        <li>京ICP备17054916号-2</li>
+      
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>theme  <a target="_blank" rel="noopener" href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+  </main>
+  <aside class="sidebar">
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/hexo.svg" alt="个人博客"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">Home</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">Archives</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/gallery">Gallery</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">About</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="搜索">
+        <i class="fe fe-search"></i>
+        搜索
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="fe fe-feed"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/copybtn.js"></script>
+
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+  });
+</script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+</body>
+
+</html>
