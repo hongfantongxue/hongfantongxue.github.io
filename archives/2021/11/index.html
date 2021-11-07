@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>
-    MapReduce |
+    归档: 2021/11 |
     
     个人博客</title>
   
@@ -32,99 +32,49 @@
 <body>
   <main class="content">
     <section class="outer">
-  <article id="post-MapReduce" class="article article-type-post" itemscope
-  itemprop="blogPost" data-scroll-reveal>
-
-  <div class="article-inner">
+  <article class="articles">
     
-    <header class="article-header">
+    <h1 class="page-type-title">2021/11</h1>
+    
+  
+  
+  
+  
+  
+  
+  <div class="archives-wrap">
+    <div class="archive-year-wrap">
+      <a href="/archives/2021" class="archive-year">2021</a>
+    </div>
+    <div class="archives">
+      
+      <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2021/11/07/Flink%E6%96%B0%E7%89%B9%E6%80%A7-CDC/" class="archive-article-date">
+  <time datetime="2021-11-07T08:33:00.000Z" itemprop="datePublished">11/07</time>
+</a>
       
 
-<h1 class="article-title" itemprop="name">
-  MapReduce
-</h1>
+<h2 itemprop="name">
+  <a class="archive-article-title" href="/2021/11/07/Flink%E6%96%B0%E7%89%B9%E6%80%A7-CDC/">Flink新特性-CDC</a>
+</h2>
 
 
 
     </header>
     
-
     
-    <div class="article-meta">
-      <a href="/2019/05/08/MapReduce/" class="article-date">
-  <time datetime="2019-05-08T13:59:00.000Z" itemprop="datePublished">2019-05-08</time>
-</a>
-      
-    </div>
-    
-
-    
-    
-<div class="tocbot"></div>
-
-    
-
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-      
-      <h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h2><p>map:映射<br>将一组数据按照规则 映射为一组<br>数据条数不会发生变化</p>
-<p>例如：<br>select age+1 from table1;</p>
-<p>reduce:规约 汇总 数据条数会发生变化</p>
-<p>例如：<br>group by</p>
-<p>shuffle 洗牌 数据根据key进行网络传输 规整到一起，按规则计算</p>
-<p>shuffle 因为会网络传输，会拉长计算的时间，能不shuffle就不shuffle</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="2-架构"><a href="#2-架构" class="headerlink" title="2.架构"></a>2.架构</h2><p>计算：cpu+内存</p>
-<p>ResourceManager(rm) 主<br>ApplicationsManager 应用管理器 作业 程序<br>ResourceScheduler     资源管理器 </p>
-<p>NodeManager(nm) 从</p>
-<p>container</p>
-<hr>
-<p>Linux两个机制：<br>1.oom-killer机制</p>
-<p>当Linux服务器某个进程使用内存超标 Linux机器为了保护自己，主动杀死进程释放内存</p>
-<p>2./tmp 目录<br>30天自动删除机制</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2019/05/08/MapReduce/" data-id="ckvp0tgj30006n7ju0o8r8z9n" class="article-share-link">
-        分享
-      </a>
-      
-    </footer>
-
   </div>
-
-  
-  
-<nav class="article-nav">
-  
-  <a href="/2019/06/24/scala%E5%9F%BA%E7%A1%80/" class="article-nav-link">
-    <strong class="article-nav-caption">前一篇</strong>
-    <div class="article-nav-title">
+</article>
       
-      scala基础01
       
     </div>
-  </a>
-  
-  
-  <a href="/2018/05/12/%E7%A6%BB%E7%BA%BF%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E5%BB%BA%E8%AE%BE/" class="article-nav-link">
-    <strong class="article-nav-caption">后一篇</strong>
-    <div class="article-nav-title">离线数据仓库建设</div>
-  </a>
-  
-</nav>
-
-  
-
-  
-  
+  </div>
   
   
 
-</article>
+  
 </section>
     <footer class="footer">
   <div class="outer">
@@ -132,8 +82,6 @@
       <ul class="list-inline">
   
   <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
-  
-  <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
   
 </ul>
     </div>
@@ -228,23 +176,6 @@
 
 
 
-
-
-<script src="/js/tocbot.min.js"></script>
-
-<script>
-  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
-  tocbot.init({
-    tocSelector: '.tocbot',
-    contentSelector: '.article-entry',
-    headingSelector: 'h1, h2, h3, h4, h5, h6',
-    hasInnerContainers: true,
-    scrollSmooth: true,
-    positionFixedSelector: '.tocbot',
-    positionFixedClass: 'is-position-fixed',
-    fixedSidebarOffset: 'auto',
-  });
-</script>
 
 
 
